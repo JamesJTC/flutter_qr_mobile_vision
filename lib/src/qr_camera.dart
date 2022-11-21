@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:flutter/widgets.dart';
 import 'package:qr_mobile_vision/qr_mobile_vision.dart';
@@ -18,8 +17,7 @@ typedef Widget ErrorCallback(BuildContext context, Object? error);
 class QrCamera extends StatefulWidget {
   QrCamera({
     Key? key,
-    this.qrCodeCallback,
-    this.qrCodeCallbackBytes,
+    required this.qrCodeCallback,
     this.child,
     this.fit = BoxFit.cover,
     WidgetBuilder? notStartedBuilder,
@@ -33,8 +31,7 @@ class QrCamera extends StatefulWidget {
         super(key: key);
 
   final BoxFit fit;
-  final ValueChanged<String?>? qrCodeCallback;
-  final ValueChanged<Uint8List?>? qrCodeCallbackBytes;
+  final ValueChanged<String?> qrCodeCallback;
   final Widget? child;
   final WidgetBuilder notStartedBuilder;
   final WidgetBuilder offscreenBuilder;
@@ -101,7 +98,6 @@ class QrCameraState extends State<QrCamera> with WidgetsBindingObserver {
       width: (devicePixelRatio * width.toInt()).ceil(),
       height: (devicePixelRatio * height.toInt()).ceil(),
       qrCodeHandler: widget.qrCodeCallback,
-      qrCodeHandlerBytes: widget.qrCodeCallbackBytes,
       formats: widget.formats,
       cameraDirection: widget.cameraDirection,
     );

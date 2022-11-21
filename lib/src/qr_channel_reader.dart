@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'dart:typed_data';
 
 class QrChannelReader {
   QrChannelReader(this.channel) {
@@ -12,12 +11,6 @@ class QrChannelReader {
             qrCodeHandler!(call.arguments);
           }
           break;
-        case 'qrReadBytes':
-          if (qrCodeHandlerBytes != null) {
-            assert(call.arguments is Uint8List);
-            qrCodeHandlerBytes!(call.arguments);
-          }
-          break;
         default:
           print("QrChannelHandler: unknown method call received at "
               "${call.method}");
@@ -25,12 +18,10 @@ class QrChannelReader {
     });
   }
 
-  void setQrCodeHandler(ValueChanged<String?>? qrch, ValueChanged<Uint8List?>? qrchb) {
+  void setQrCodeHandler(ValueChanged<String?>? qrch) {
     this.qrCodeHandler = qrch;
-    this.qrCodeHandlerBytes = qrchb;
   }
 
   MethodChannel channel;
   ValueChanged<String?>? qrCodeHandler;
-  ValueChanged<Uint8List?>? qrCodeHandlerBytes;
 }
